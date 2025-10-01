@@ -1,0 +1,2 @@
+pyinstaller>=5.0
+# Tkinter is part of the Python standard library on Windows; no extra package needed

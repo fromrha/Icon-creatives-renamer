@@ -1,13 +1,18 @@
+import sys
 import tkinter as tk
 from tkinter import ttk, messagebox, filedialog
 import os
 import re
 from pathlib import Path
 
+# Single source of truth for app version. Keep this updated in source; the built EXE
+# will include the same value once you build from this file.
+__version__ = "0.1.0"
+
 class DesignRenamer:
     def __init__(self, root):
         self.root = root
-        self.root.title("Design File Renamer")
+        self.root.title(f"Design File Renamer v{__version__}")
         self.root.geometry("600x500")
         self.root.resizable(True, True)
         
@@ -17,6 +22,7 @@ class DesignRenamer:
         self.start_number = tk.StringVar(value="1")  # Add this line with default value of "1"
         
         self.setup_ui()
+        self.setup_menu()
         
     def setup_ui(self):
         # Main frame
@@ -82,6 +88,23 @@ class DesignRenamer:
         
         # Set current directory as default
         self.folder_path.set(os.getcwd())
+
+    def setup_menu(self):
+        # Add a simple Help -> About menu that shows the version and runtime info
+        try:
+            menubar = tk.Menu(self.root)
+            helpmenu = tk.Menu(menubar, tearoff=0)
+            helpmenu.add_command(label="About", command=self.show_about)
+            menubar.add_cascade(label="Help", menu=helpmenu)
+            self.root.config(menu=menubar)
+        except Exception:
+            # Some minimal Tk builds may not support menus; ignore gracefully
+            pass
+
+    def show_about(self):
+        runtime = 'Python' if not getattr(sys, 'frozen', False) else 'Frozen EXE'
+        msg = f"Design File Renamer\nVersion: {__version__}\nRuntime: {runtime}\n\nBuilt from source: keep your .py and the EXE in sync by building the EXE from this same file."
+        messagebox.showinfo("About", msg)
         
     def browse_folder(self):
         folder = filedialog.askdirectory()
@@ -136,6 +159,12 @@ class DesignRenamer:
         if not company_name:
             messagebox.showerror("Error", "Please enter a company name")
             return
+
+        # Validate start number is a positive integer
+        start_raw = self.start_number.get().strip()
+        if not start_raw.isdigit() or int(start_raw) < 1:
+            messagebox.showerror("Error", "Start Hook Number must be a positive integer")
+            return
         
         files = self.find_design_files()
         if not files:
@@ -158,6 +187,12 @@ class DesignRenamer:
         company_name = self.company_name.get().strip()
         if not company_name:
             messagebox.showerror("Error", "Please enter a company name")
+            return
+
+        # Validate start number is a positive integer
+        start_raw = self.start_number.get().strip()
+        if not start_raw.isdigit() or int(start_raw) < 1:
+            messagebox.showerror("Error", "Start Hook Number must be a positive integer")
             return
         
         files = self.find_design_files()
