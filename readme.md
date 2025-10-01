@@ -1,6 +1,6 @@
 # Icon Creatives Renamer
 
-![Thumbnail - main view](gallery/thumb-main.jpg)
+![Thumbnail - main view](gallery/thumb-main_.webp)
 
 A tiny Tkinter app that batch-renames exported design assets to a clean, consistent format for delivery.
 
@@ -78,7 +78,7 @@ After building, the EXE will be in `dist\` (e.g. `DesignRenamer-v0.1.0.exe`).
 
 ## Filename Rules (important)
 
-![File rename example](gallery/file-rename-example.jpg)
+![File rename example](gallery/file-rename-example_.webp)
 
 Input must match: `^([a-zA-Z0-9x]+)\s*\((\d+)\)\.(jpg|jpeg|png|gif|bmp)$`
 
