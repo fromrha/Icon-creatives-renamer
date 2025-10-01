@@ -1,6 +1,3 @@
-# README.md (drop-in)
-
-````markdown
 # Icon Creatives Renamer
 
 A tiny Tkinter app that batch-renames exported design assets to a clean, consistent format for delivery.
